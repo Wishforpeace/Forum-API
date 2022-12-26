@@ -2,6 +2,8 @@ package main
 
 import (
 	"Forum-API/bootstrap"
+	"Forum-API/pkg/config"
+	"flag"
 	"fmt"
 	"github.com/gin-gonic/gin"
 )
@@ -36,12 +38,30 @@ func main() {
 	//	}
 	//})
 
-	// new 一个 gin Engine
+	//// new 一个 gin Engine
+	//router := gin.New()
+	//
+	////初始化路由绑定
+	//bootstrap.SetupRoute(router)
+	//err := router.Run(":8080")
+	//if err != nil {
+	//	fmt.Println(err.Error())
+	//}
+
+	// 配置初始化，依赖命令行 --env参数
+	var env string
+	flag.StringVar(&env, "env", "", "加载 .env 文件，如 --env=testing 加载的是 .env.testing 文件")
+	flag.Parse()
+	config.InitConfig(env)
+
+	// new一个Gin Engine
 	router := gin.New()
 
-	//初始化路由绑定
+	// 初始化路由绑定
 	bootstrap.SetupRoute(router)
-	err := router.Run(":8080")
+
+	// 运行服务
+	err := router.Run(":" + config.Get("app.port"))
 	if err != nil {
 		fmt.Println(err.Error())
 	}
