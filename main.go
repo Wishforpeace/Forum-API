@@ -66,4 +66,10 @@ func main() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
+
+	// 初始化DB
+	bootstrap.SetupDB()
+
+	// 初始化路由绑定
+	bootstrap.SetupRoute(router)
 }
