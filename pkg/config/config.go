@@ -3,7 +3,6 @@ package config
 import (
 	"Forum-API/pkg/helpers"
 	_ "Forum-API/pkg/helpers"
-	"fmt"
 	"github.com/spf13/cast"
 	_ "github.com/spf13/cast"
 	viperlib "github.com/spf13/viper" // 自定义包名，避免与内置 viper 实例冲突
@@ -59,14 +58,16 @@ func loadEnv(envSuffix string) {
 	// 默认加载.yaml文件，如果有传参 --env=name的话，加载.env.name文件
 	envPath := ".env"
 	if len(envSuffix) > 0 {
-		filepath := ".env" + envSuffix
+		filepath := envPath + envSuffix
 		if _, err := os.Stat(filepath); err != nil {
 			envPath = filepath
 		}
 	}
-	fmt.Println(envPath)
+
 	//加载env
 	viper.SetConfigName(envPath)
+	viper.SetConfigType("env")
+	viper.AutomaticEnv()
 	if err := viper.ReadInConfig(); err != nil {
 		panic(err)
 	}

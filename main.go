@@ -50,8 +50,9 @@ func main() {
 
 	// 配置初始化，依赖命令行 --env参数
 	var env string
-	flag.StringVar(&env, "env", "", "加载 .env 文件，如 --env=testing 加载的是 .env.testing 文件")
+	flag.StringVar(&env, "env", "", "加载 .yaml 文件，如 --env=testing 加载的是 testing 文件")
 	flag.Parse()
+	fmt.Println(env)
 	config.InitConfig(env)
 
 	// new一个Gin Engine
