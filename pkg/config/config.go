@@ -92,8 +92,8 @@ func Add(name string, configFn ConfigFunc) {
 // Get获取配置项
 // 第一个参数path允许使用点式获取
 // 第二个参数允许传参默认值
-func Get(path string, defaultVaule ...interface{}) string {
-	return GetString(path, defaultVaule...)
+func Get(path string, defaultValue ...interface{}) string {
+	return GetString(path, defaultValue...)
 }
 
 func internalGet(path string, defaultValue ...interface{}) interface{} {

@@ -1,8 +1,8 @@
 package routes
 
 import (
+	"Forum-API/app/http/controllers/api/v1/auth"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func RegisterAPIRoutes(r *gin.Engine) {
@@ -10,10 +10,11 @@ func RegisterAPIRoutes(r *gin.Engine) {
 	// 测试一个 v1 路由组
 	v1 := r.Group("/v1")
 	{
-		v1.GET("/", func(c *gin.Context) {
-			c.JSON(http.StatusOK, gin.H{
-				"Hello": "World",
-			})
-		})
+		authGroup := v1.Group("/auth")
+		{
+			suc := new(auth.SignupController)
+			// 判断手机是否已注册
+			authGroup.POST("/signup/phone/exist", suc.InPhoneExist)
+		}
 	}
 }

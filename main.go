@@ -54,7 +54,7 @@ func main() {
 	flag.Parse()
 	fmt.Println(env)
 	config.InitConfig(env)
-
+	fmt.Println(config.Get("app.port"))
 	// new一个Gin Engine
 	router := gin.New()
 
@@ -62,7 +62,9 @@ func main() {
 	bootstrap.SetupRoute(router)
 
 	// 运行服务
+
 	err := router.Run(":" + config.Get("app.port"))
+
 	if err != nil {
 		fmt.Println(err.Error())
 	}

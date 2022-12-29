@@ -1,6 +1,7 @@
 package bootstrap
 
 import (
+	"Forum-API/app/models/user"
 	"Forum-API/pkg/config"
 	"Forum-API/pkg/database"
 	"errors"
@@ -48,4 +49,9 @@ func SetupDB() {
 
 	// 设置每个连接的过期时间
 	database.SQLDB.SetConnMaxLifetime(time.Duration(config.GetInt("database.mysql.max_life_seconds")) * time.Second)
+
+	fmt.Println("66666666")
+	if err := database.DB.AutoMigrate(&user.User{}); err != nil {
+		panic(err)
+	}
 }
